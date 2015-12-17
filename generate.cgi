@@ -1,5 +1,6 @@
 #!/bin/bash
 
+rm /tmp/ELTest-report
 
 echo '<nav>'
 echo '<ul id="menu">'
@@ -19,7 +20,7 @@ echo '<li>'
 echo "<a id=link4 href=\"javascript:loadtest(4, 'tests/c/test4/test.html')\" >Test4</a>"
 echo '</li>'
 echo '<li>'
-echo "<a href=\"javascript:loadsection('Bilan.html')\" >Bilan</a>"
+echo "<a href=\"javascript:loadreport()\" >Bilan</a>"
 echo '</li>'
 echo '</ul>'
 echo '</nav>'

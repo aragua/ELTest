@@ -1,4 +1,28 @@
-var currenttest = 0;
+function createCookie(name,value,days) {
+	if (days) {
+		var date = new Date();
+		date.setTime(date.getTime()+(days*24*60*60*1000));
+		var expires = "; expires="+date.toGMTString();
+	}
+	else var expires = "";
+	document.cookie = name+"="+value+expires+"; path=/";
+}
+
+function readCookie(name) {
+	var nameEQ = name + "=";
+	var ca = document.cookie.split(';');
+	for(var i=0;i < ca.length;i++) {
+		var c = ca[i];
+		while (c.charAt(0)==' ') c = c.substring(1,c.length);
+		if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+	}
+	return null;
+}
+
+function eraseCookie(name) {
+	createCookie(name,"",-1);
+}
+
 
 function loadmainsection( url, params, methodget )
 {
@@ -26,7 +50,7 @@ function loadmainsection( url, params, methodget )
 	{
 	    var div = document.getElementById('main_section');
 	    div.innerHTML = xhr.responseText;
-	    console.log(xhr.responseText);
+	    //console.log(xhr.responseText);
 	}
     }
     
@@ -45,7 +69,26 @@ function loadsection( page_name )
 function loadtest( number, page_name )
 {
     loadsection( page_name );
-    currentest = number;
+    createCookie("currenttest",number,1);
+}
+
+function loadreport()
+{
+    var xhr = new XMLHttpRequest();
+    var url = "report.cgi";
+    xhr.open('GET', url);
+    
+    xhr.onreadystatechange = function() 
+    {
+	{
+	    var div = document.getElementById('main_section');
+	    div.innerHTML = xhr.responseText;
+	    console.log(xhr.responseText);
+	    createCookie("currenttest",0,1);
+	}
+    }
+    
+    xhr.send(null);
 }
 
 function gettheme()
@@ -74,6 +117,7 @@ function start()
 	    var div = document.getElementById('wrapper');
 	    div.innerHTML = xhr.responseText;
 	    console.log(xhr.responseText);
+	    createCookie("currenttest",0,1);
 	}
     }
     
@@ -82,11 +126,12 @@ function start()
 
 function submit(answer)
 {
+    var currenttest = readCookie("currenttest");
     if ( currenttest == 0 )
 	console.log("error: submit" + answer);
     else
     {
-	var link = document.getElementsById("link"+currenttest);
+	var link = document.getElementById("link"+currenttest);
 	var xhr = new XMLHttpRequest();
 	var url = "submission.cgi?" + answer;
 	xhr.open('GET', url);
@@ -108,7 +153,7 @@ function submit(answer)
 
 function qcm_submit(theme, test) {
     var radios = document.getElementsByName("qcm");
-    var answer = "answer=";
+    var answer = theme + "-" + test + "=";
     for (var i = 0; i < radios.length; i++) {       
 	if (radios[i].checked) {
 	    answer = answer + i + "-";
