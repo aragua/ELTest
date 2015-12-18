@@ -30,7 +30,7 @@ function loadmainsection( url, params, methodget )
 
     if ( url === undefined || params === undefined )
     {
-	url = "error.cgi";
+	url = "cgi/error.cgi";
 	params = "function=getremotecontent";
 	methodget=true;
     }
@@ -75,7 +75,7 @@ function loadtest( number, page_name )
 function loadreport()
 {
     var xhr = new XMLHttpRequest();
-    var url = "report.cgi";
+    var url = "cgi/report.cgi";
     xhr.open('GET', url);
     
     xhr.onreadystatechange = function() 
@@ -108,7 +108,7 @@ function gettheme()
 function start()
 {
     var xhr = new XMLHttpRequest();
-    var url = "generate.cgi?" + gettheme();
+    var url = "cgi/generate.cgi?" + gettheme();
     xhr.open('GET', url);
     
     xhr.onreadystatechange = function() 
@@ -133,7 +133,7 @@ function submit(answer)
     {
 	var link = document.getElementById("link"+currenttest);
 	var xhr = new XMLHttpRequest();
-	var url = "submission.cgi?" + answer;
+	var url = "cgi/submission.cgi?" + answer;
 	xhr.open('GET', url);
     
 	xhr.onreadystatechange = function() 
@@ -162,6 +162,40 @@ function qcm_submit(theme, test) {
     console.log(answer);
     
     submit(answer);
+}
+
+function code_compile()
+{    
+    var xhr = new XMLHttpRequest();
+
+    params = document.getElementById('codetextarea').value;
+    
+    xhr.open('POST', 'cgi/compile.cgi');
+    xhr.onreadystatechange = function() 
+    {
+	{
+	    var ta = document.getElementById('outputtextarea');
+	    ta.value = xhr.responseText;
+	}
+    }
+    
+    xhr.send(params);
+}
+
+function code_test ()
+{
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', "cgi/testcode.cgi" );
+    
+    xhr.onreadystatechange = function() 
+    {
+	{
+	    var ta = document.getElementById('testtextarea');
+	    ta.value = xhr.responseText;
+	}
+    }
+    
+    xhr.send(null);
 }
 
 function code_submit(theme, test) {

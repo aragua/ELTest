@@ -17,7 +17,7 @@ echo '<li>'
 echo "<a id=link3 href=\"javascript:loadtest(3, 'tests/c/test3/test.html')\" >Test3</a>"
 echo '</li>'
 echo '<li>'
-echo "<a id=link4 href=\"javascript:loadtest(4, 'tests/c/test4/test.html')\" >Test4</a>"
+echo "<a id=link4 href=\"javascript:loadtest(4, 'tests/c/test5/test.html')\" >Test4</a>"
 echo '</li>'
 echo '<li>'
 echo "<a href=\"javascript:loadreport()\" >Bilan</a>"
