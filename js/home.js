@@ -91,11 +91,12 @@ function loadreport()
     xhr.send(null);
 }
 
-function gettheme()
+function getdata()
 {
     var cboxes = document.getElementsByName('tcb[]');
+    var name = document.getElementById('name').value;
     var len = cboxes.length;
-    var theme = "theme=";
+    var theme = "name=" + name + "&theme=";
     for (var i=0; i<len; i++) {
 	if ( cboxes[i].checked ) {
             theme = theme + cboxes[i].value + "-";
@@ -108,7 +109,7 @@ function gettheme()
 function start()
 {
     var xhr = new XMLHttpRequest();
-    var url = "cgi/generate.cgi?" + gettheme();
+    var url = "cgi/generate.cgi?" + getdata();
     xhr.open('GET', url);
     
     xhr.onreadystatechange = function() 
@@ -199,12 +200,46 @@ function code_test ()
 }
 
 function code_submit(theme, test) {
-    console.log("[" + theme + "]" + test + " : ");
-    submit();
+    var currenttest = readCookie("currenttest");
+    if ( currenttest == 0 )
+	console.log("error: submit" + answer);
+    else
+    {
+	var link = document.getElementById("link"+currenttest);
+	var xhr = new XMLHttpRequest();
+	params = theme + "-" + test + "=" + document.getElementById('codetextarea').value;
+        xhr.open('POST', 'cgi/post_submission.cgi');
+	xhr.onreadystatechange = function() 
+	{
+	    {
+		var div = document.getElementById('main_section');
+		div.innerHTML = xhr.responseText;
+	    }
+	}    
+	xhr.send(params);
+	link.href="javascript:void(0)";
+    }
 }
 
 function text_submit(theme, test) {
-    console.log("[" + theme + "]" + test + " : ");
-    submit();
+    var currenttest = readCookie("currenttest");
+    if ( currenttest == 0 )
+	console.log("error: submit" + answer);
+    else
+    {
+	var link = document.getElementById("link"+currenttest);
+	var xhr = new XMLHttpRequest();
+	params = theme + "-" + test + "=" + document.getElementById('answertextarea').value;
+        xhr.open('POST', 'cgi/post_submission.cgi');
+	xhr.onreadystatechange = function() 
+	{
+	    {
+		var div = document.getElementById('main_section');
+		div.innerHTML = xhr.responseText;
+	    }
+	}    
+	xhr.send(params);
+	link.href="javascript:void(0)";
+    }
 }
 

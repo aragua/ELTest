@@ -1,6 +1,17 @@
 #!/bin/bash
 
+
 rm /tmp/ELTest-report
+
+echo $QUERY_STRING | awk -F '&' '{print $1}' | sed 's/%20/ /g' >> /tmp/ELTest-report
+THEME=$(echo $QUERY_STRING | awk -F '&' '{print $2}' | sed -e 's/theme=//g' | sed -e 's/-$//g' | sed 's/-/ /g')
+echo "Theme choisis : $THEME" >> /tmp/ELTest-report
+
+for test in $THEME
+do
+    AVAILABLE_TEST=$(find ../tests/$test/ -name "test.html")
+    echo $AVAILABLE_TEST >> /tmp/ELTest-report
+done
 
 echo '<nav>'
 echo '<ul id="menu">'

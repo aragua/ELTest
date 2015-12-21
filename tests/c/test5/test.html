@@ -1,7 +1,13 @@
 <form>
+  Ecrire le code allouant un tableau d'entier de 2 dimensions de 10*10 
   <textarea id="codetextarea" name="code" rows=20 cols=60>
-    #include <stdio.h>
-      int main(void) {printf("toto\n");return 0;}</textarea>
+#include <stdio.h>
+int main(void)
+{
+printf("toto\n");
+return 0;
+}
+  </textarea>
   <textarea id="outputtextarea" name="output" rows=20 cols=50>Sortie de compilation</textarea>
   <textarea id="testtextarea" name="test" rows=20 cols=50>Sortie de test</textarea>
   <button type="button" id="compilebutton" onclick="javascript:code_compile()">Compiler</button>
