@@ -207,7 +207,7 @@ function code_submit(theme, test) {
     {
 	var link = document.getElementById("link"+currenttest);
 	var xhr = new XMLHttpRequest();
-	params = theme + "-" + test + "=" + document.getElementById('codetextarea').value;
+	params = theme + "-" + test + "=\n" + document.getElementById('codetextarea').value;
         xhr.open('POST', 'cgi/post_submission.cgi');
 	xhr.onreadystatechange = function() 
 	{
@@ -215,7 +215,7 @@ function code_submit(theme, test) {
 		var div = document.getElementById('main_section');
 		div.innerHTML = xhr.responseText;
 	    }
-	}    
+	}
 	xhr.send(params);
 	link.href="javascript:void(0)";
     }
@@ -229,7 +229,7 @@ function text_submit(theme, test) {
     {
 	var link = document.getElementById("link"+currenttest);
 	var xhr = new XMLHttpRequest();
-	params = theme + "-" + test + "=" + document.getElementById('answertextarea').value;
+	params = theme + "-" + test + "=\n" + document.getElementById('answertextarea').value;
         xhr.open('POST', 'cgi/post_submission.cgi');
 	xhr.onreadystatechange = function() 
 	{

@@ -111,3 +111,7 @@ a:link, a:visited, a:active {
 a:hover {
     color: red;
 }
+
+.tabulation {
+    margin-left: 8em;
+}
